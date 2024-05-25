@@ -1,4 +1,4 @@
-- [🚀 FoodFire Live Project App Link 😍](https://foodfire-chapter09.netlify.app/)
+- [🚀 Quick Bite Live Project App Link 😍](https://quick-bite-88.netlify.app/)
 
 ## 🔥 Clone this Repository
 
