@@ -22,25 +22,20 @@ const Cart = () => {
         </div>
         <hr />
         {rest_info.map((item) => {
-          const itemId = item.info.id;
-          const price = item.info.costForTwo
-            ? parseInt(item.info.costForTwo.replace(/\D/g, ""), 10)
-            : 0;
+          const itemId = item.id;
+          const price = item.prices ? parseInt(item.prices, 10) : 0;
           if (cartIteams[itemId] || 0 > 0) {
             return (
               // eslint-disable-next-line react/jsx-key
               <div>
                 <div>
                   <div key={itemId} className="cart-items-row">
-                    <img src={imageUrl + item.info.cloudinaryImageId} alt="" />
-                    <p>{item.info.name}</p>
+                    <img src={item.image} alt="" />
+                    <p>{item.name}</p>
                     <p>₹{price}</p>
-                    <p>{cartIteams[item.info.id]}</p>
-                    <p>₹{price * cartIteams[item.info.id]}</p>
-                    <p
-                      onClick={() => removeIteam(item.info.id)}
-                      className="cross"
-                    >
+                    <p>{cartIteams[item.id]}</p>
+                    <p>₹{price * cartIteams[item.id]}</p>
+                    <p onClick={() => removeIteam(item.id)} className="cross">
                       x
                     </p>
                   </div>

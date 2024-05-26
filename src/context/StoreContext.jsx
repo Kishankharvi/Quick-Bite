@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { rest_info } from "../assets/resCardsItems";
+import { rest_info } from "../assets/resCardsItem";
 
 export const StoreContext = createContext(null);
 
@@ -28,19 +28,18 @@ const StoreContextProvider = (props) => {
     let total = 0;
     for (const item in cartIteams) {
       if (cartIteams[item] > 0) {
-        let itemInfo = rest_info.find((product) => product.info.id === item);
-        if (itemInfo && itemInfo.info.costForTwo) {
-          const price = parseInt(
-            itemInfo.info.costForTwo.replace(/\D/g, ""),
-            10
-          );
+        let itemInfo = rest_info.find((product) => product.id === item);
+        if (itemInfo && itemInfo.prices) {
+          const price = itemInfo.prices;
           total += price * cartIteams[item];
         }
       }
     }
     return total;
   };
-
+  const clearCart = () => {
+    setCartIteams({});
+  };
   const contextValue = {
     rest_info,
     cartIteams,
@@ -48,6 +47,7 @@ const StoreContextProvider = (props) => {
     addIteam,
     removeIteam,
     getTotalCartAmount,
+    clearCart,
   };
 
   useEffect(() => {

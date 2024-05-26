@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import "./LoginPopoup.css";
 import { assets } from "../../assets/assets";
-
+import { useForm } from "react-hook-form";
 const LoginPopup = ({ setShowLogin }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const [currentState, setCurrentState] = useState("Sign up");
   return (
     <div className="login-popup">
-      <form action="" className="login-popoup-container">
+      <form
+        action=""
+        className="login-popoup-container"
+        onSubmit={handleSubmit()}
+      >
         <div className="login-popoup-title">
           <h2>{currentState}</h2>
           <img
@@ -21,11 +31,52 @@ const LoginPopup = ({ setShowLogin }) => {
           {currentState === "Login" ? (
             <></>
           ) : (
-            <input type="text" placeholder="Your Name " required />
+            <div>
+              <input
+                type="text"
+                placeholder="Your Name "
+                {...register("name", {
+                  required: "name is required",
+                })}
+              />
+              {errors.name && (
+                <span className="error-message">{errors.name.message}</span>
+              )}
+            </div>
           )}
 
-          <input type="email" placeholder="Your Email" required />
-          <input type="password" placeholder="Password" required />
+          <div>
+            <input
+              type="email"
+              placeholder="Your Email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Invalid email address",
+                },
+              })}
+            />
+            {errors.email && (
+              <span className="error-message">{errors.email.message}</span>
+            )}
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters long",
+                },
+              })}
+            />
+            {errors.password && (
+              <span className="error-message">{errors.password.message}</span>
+            )}
+          </div>
           <button>
             {currentState === "Sign up" ? "Create account" : "Login"}
           </button>

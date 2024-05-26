@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Checkout.css";
 import { Link } from "react-router-dom";
+import { StoreContext } from "../../context/StoreContext";
 
 const Checkout = () => {
   const [loading, setLoading] = useState(true);
-
+  const { clearCart } = useContext(StoreContext);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -21,7 +22,9 @@ const Checkout = () => {
       ) : (
         <div className="success">
           <h2>Your order is successful!</h2>
-          <Link to="/">Go to Home</Link>
+          <Link to="/" onClick={() => clearCart()}>
+            Go to Home
+          </Link>
         </div>
       )}
     </div>

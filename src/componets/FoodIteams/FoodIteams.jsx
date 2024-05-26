@@ -10,13 +10,13 @@ import { StoreContext } from "../../context/StoreContext";
 const FoodIteams = ({
   id,
   name,
-  cuisines,
-  areaName,
-  costForTwo,
+  description,
+  prices,
   avgRatingString,
-  cloudinaryImageId,
-  slaString,
+  image,
 }) => {
+  console.log("price" + prices);
+  console.log("image" + image);
   const { cartIteams, addIteam, removeIteam } = useContext(StoreContext);
   return (
     <div>
@@ -24,7 +24,7 @@ const FoodIteams = ({
         <div className="cardimg1 restcard-logo">
           <div className="cardimg">
             <div className="cardimg2">
-              <img src={imageUrl + cloudinaryImageId} alt={name} />
+              <img src={image} alt={name} />
             </div>
           </div>
         </div>
@@ -35,16 +35,10 @@ const FoodIteams = ({
               <StarIcon />
             </div>
             <div className="restcard-rating gnOsqr">
-              <span className="gnOsqr">{avgRatingString} ⋯⋯ </span>
-              {costForTwo ?? "₹200 for two"}
+              <span className="gnOsqr">{avgRatingString} ⋯⋯ </span>₹{prices}
             </div>
           </div>
-          <div className="restcard-location">
-            <div className="restcard-cuisines dnXOKm">
-              {cuisines.join(", ")}
-            </div>
-            <div className="restcard-area dnXOKm">{areaName}</div>
-          </div>
+          <div className="description">{description}</div>
           <div className="add-to-cart">
             <div>
               Add To Cart <span className="arrow-svg">⇛</span>

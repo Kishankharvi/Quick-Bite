@@ -12,28 +12,24 @@ const FoodDisplay = () => {
     setFilteredRestaurants(rest_info);
   }, [rest_info]);
 
-  const parsePrice = (priceString) =>
-    parseInt(priceString.replace(/[^\d]/g, ""));
-
   const filterByRating = () => {
     let filteredList = rest_info
-      .filter((restaurant) => restaurant.info.avgRating >= 4.0)
-      .sort((a, b) => b.info.avgRating - a.info.avgRating);
+      .filter((restaurant) => restaurant.avgRating >= 4.0)
+      .sort((a, b) => b.avgRating - a.avgRating);
     setFilteredRestaurants(filteredList);
   };
 
   const filterByPriceRange = () => {
     let filteredList = rest_info.filter((restaurant) => {
-      const costForTwo = parsePrice(restaurant.info.costForTwo);
-      return costForTwo >= 300 && costForTwo <= 600;
+      return restaurant.prices >= 100 && restaurant.prices <= 200;
     });
     setFilteredRestaurants(filteredList);
   };
 
   const filterByMaxPrice = () => {
     let filteredList = rest_info.filter((restaurant) => {
-      const costForTwo = parsePrice(restaurant.info.costForTwo);
-      return costForTwo < 300;
+      console.log(restaurant.prices);
+      return restaurant.prices < 100;
     });
     setFilteredRestaurants(filteredList);
   };
@@ -46,7 +42,7 @@ const FoodDisplay = () => {
     const value = e.target.value;
     setSearchQuery(value);
     const filteredList = rest_info.filter((item) =>
-      item.info.name.toLowerCase().includes(value.toLowerCase())
+      item.name.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredRestaurants(filteredList);
   };
@@ -59,10 +55,10 @@ const FoodDisplay = () => {
           Ratings 4.0+
         </button>
         <button className="between" onClick={filterByPriceRange}>
-          Rs. 300-Rs. 600
+          Rs. 100-Rs. 200
         </button>
         <button className="lessthan-300" onClick={filterByMaxPrice}>
-          Less than Rs. 300
+          Less than Rs. 100
         </button>
         <button onClick={() => resetFilters()}>Reset Filters</button>
         <input
@@ -79,14 +75,12 @@ const FoodDisplay = () => {
           filteredRestaurants.map((item, index) => (
             <FoodIteams
               key={index}
-              id={item.info.id}
-              name={item.info.name}
-              cuisines={item.info.cuisines}
-              areaName={item.info.areaName}
-              costForTwo={item.info.costForTwo}
-              avgRatingString={item.info.avgRatingString}
-              cloudinaryImageId={item.info.cloudinaryImageId}
-              slaString={item.info.slaString}
+              id={item.id}
+              name={item.name}
+              prices={item.prices}
+              avgRatingString={item.avgRatingString}
+              image={item.image}
+              description={item.description}
             />
           ))
         ) : (
